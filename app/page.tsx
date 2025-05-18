@@ -40,7 +40,10 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-[3px] opacity-90"
           style={{
-            backgroundImage: `url("${basePath}/images/finance-background.png")`,
+            backgroundImage: `url("/the-money-brief/images/finance-background.png")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "100vh",
           }}
         ></div>
         <div className="relative z-10 flex items-center justify-center">
