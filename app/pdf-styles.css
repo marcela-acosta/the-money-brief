@@ -1,0 +1,50 @@
+/* Special class for PDF export */
+.pdf-export-container {
+  position: relative;
+  background-color: #f8fafc;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Override transparency with solid colors for PDF */
+.pdf-export-container .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.pdf-export-container .bg-white\/30 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.pdf-export-container .bg-white\/40 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.pdf-export-container .futuristic-card {
+  background-color: white !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.pdf-export-container .futuristic-panel {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+.pdf-export-container .recommendation-card {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-left: 4px solid #10b981 !important;
+}
+
+/* PDF-specific styles */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

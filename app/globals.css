@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 210 40% 96%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 210 40% 98%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 11%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Futuristic styles */
+.futuristic-card {
+  @apply bg-gradient-to-br from-white/40 to-white/25 backdrop-blur-md;
+  box-shadow: 0 8px 32px rgba(31, 41, 55, 0.1);
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.futuristic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* Border width */
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.7),
+    rgba(16, 185, 129, 0.3) 25%,
+    rgba(209, 213, 219, 0.3) 50%,
+    rgba(16, 185, 129, 0.3) 75%,
+    rgba(16, 185, 129, 0.7)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  pointer-events: none;
+}
+
+.futuristic-badge {
+  @apply font-medium text-xs px-2.5 py-1 rounded-full;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.futuristic-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.futuristic-progress {
+  @apply h-2 rounded-full overflow-hidden;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.futuristic-progress-bar {
+  @apply h-full rounded-full;
+  background: linear-gradient(90deg, var(--start-color), var(--end-color));
+  box-shadow: 0 0 8px var(--glow-color);
+  transition: width 0.5s ease;
+}
+
+.futuristic-button {
+  @apply relative overflow-hidden transition-all duration-300 font-medium;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.futuristic-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: 0.375rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.7), rgba(209, 213, 219, 0.3)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.futuristic-button:hover::after {
+  opacity: 1;
+}
+
+.futuristic-button:before {
+  content: "";
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.futuristic-button:hover:before {
+  @apply opacity-100;
+}
+
+.futuristic-glow-text {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.futuristic-panel {
+  @apply relative rounded-lg overflow-hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.futuristic-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px; /* Border width */
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(209, 213, 219, 0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+  pointer-events: none;
+}
+
+.option-card {
+  position: relative;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.option-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px; /* Border width */
+  border-radius: 0.375rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(209, 213, 219, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  pointer-events: none;
+}
+
+.option-card:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+.option-card.selected::before {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0.4));
+  opacity: 1;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.recommendation-card {
+  position: relative;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.recommendation-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #10b981, #059669);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+/* Glass morphism effect for cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(31, 41, 55, 0.1);
+}
