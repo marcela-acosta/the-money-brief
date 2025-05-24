@@ -67,9 +67,9 @@ export default function Home() {
     if (surveyAnswers.emergencyFund === "No") {
       extraSection = `\n\n**Emergency Fund Resources**\n- Learn how to build your emergency fund in Brazil: https://www.nomadbrazil.com/emergency-fund-brazil-guide`;
     }
-    const prompt = `You are an expert financial advisor. The user's profile and survey responses will be shown above in a formatted summary. DO NOT repeat the user's profile or survey responses. Start with "Hi [FirstName]," followed by a brief one-sentence introduction. Keep all sections concise and to the point. Only provide the following sections in this exact order:\n\nHi [FirstName],\n[One brief introductory sentence]\n\n**Risk Profile Analysis**\n[2-3 concise sentences]\n\n**Investment Recommendations**\n[3-4 bullet points with brief explanations]\n\n**Practical Tips**\n[2-3 bullet points]\n\n**Relevant Warnings**\n[2-3 bullet points]\n\n**Motivational Closing**\n[1-2 brief sentences]\n${extraSection}\n\nThe tone should be professional, clear, and empathetic. Write the entire report in English. All resource links must be about investing in Brazil and in English.\n\nUser Profile:\n${profileTable}\n\n${surveyTable}`;
+    const prompt = `You are an expert financial advisor. The user\'s profile and survey responses will be shown above in a formatted summary. DO NOT repeat the user\'s profile or survey responses. Start with "Hi [FirstName]," followed by a brief one-sentence introduction. Keep all sections concise and to the point. Only provide the following sections in this exact order:\n\nHi [FirstName],\n[One brief introductory sentence]\n\n**Risk Profile Analysis**\n[2-3 concise sentences]\n\n**Investment Recommendations**\n[3-4 bullet points with brief explanations]\n\n**Practical Tips**\n[2-3 bullet points]\n\n**Relevant Warnings**\n[2-3 bullet points]\n\n**Motivational Closing**\n[1-2 brief sentences]\n${extraSection}\n\nThe tone should be professional, clear, and empathetic. Write the entire report in English. All resource links must be about investing in Brazil and in English.\n\nUser Profile:\n${profileTable}\n\n${surveyTable}`;
     try {
-      const res = await fetch("/the-money-brief/api/generate-report", {
+      const res = await fetch("/api/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
@@ -112,7 +112,7 @@ export default function Home() {
   // Nueva animación de carga tras el survey
   if (completed && reportLoading) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center bg-white">
+      <main className="min-h-screen flex flex-col items-center justify-center">
         <Head>
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </Head>

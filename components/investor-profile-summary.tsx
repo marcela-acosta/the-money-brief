@@ -100,7 +100,7 @@ export function InvestorProfileSummary({
         resources: getInvestmentResources(answers),
         onComplete: () => {}, // dummy
       });
-      const res = await fetch("/the-money-brief/api/send-report", {
+      const res = await fetch("/api/send-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
