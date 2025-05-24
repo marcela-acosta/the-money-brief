@@ -4,6 +4,14 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.85)
+    ),
+    url("/images/finance-background.png") no-repeat center center fixed;
+  background-size: cover;
+  background-blend-mode: lighten;
+  @apply bg-background text-foreground;
 }
 
 @layer utilities {
@@ -88,7 +96,7 @@ body {
   * {
     @apply border-border;
   }
-  body {
+  /* body {
     @apply bg-background text-foreground;
-  }
+  } */
 }

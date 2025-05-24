@@ -1,16 +1,10 @@
-"use client"
-import { Card } from "@/components/ui/card"
-import Link from "next/link"
+"use client";
+import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 export function BlogPost() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
-      {/* Blurred background layer - same as in the form */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-[3px] opacity-90"
-        style={{ backgroundImage: 'url("/images/finance-background.png")' }}
-      ></div>
-
       {/* Content layer */}
       <div className="relative z-10 w-full max-w-4xl">
         <Card className="futuristic-card w-full shadow-lg">
@@ -27,37 +21,66 @@ export function BlogPost() {
 
             <div className="space-y-6">
               <p className="text-futuristic-grey-800">
-                On Friday, May 16, Banco do Brasil (BVMF: BBAS3) suffered a dramatic market downturn, with its stock
-                closing at <strong>R$25.67</strong>, marking a <strong>12.69% decline</strong> from the previous day's
-                close of R$29.40. This sharp drop came in the wake of a disappointing first-quarter earnings report that
-                missed analysts' expectations and prompted immediate revisions to the bank's 2025 outlook.
+                On Friday, May 16, Banco do Brasil (BVMF: BBAS3) suffered a
+                dramatic market downturn, with its stock closing at{" "}
+                <strong>R$25.67</strong>, marking a{" "}
+                <strong>12.69% decline</strong> from the previous day's close of
+                R$29.40. This sharp drop came in the wake of a disappointing
+                first-quarter earnings report that missed analysts' expectations
+                and prompted immediate revisions to the bank's 2025 outlook.
               </p>
 
               <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-futuristic-green-600">🚨 Q1 2025 Earnings Disappointment</h2>
+                <h2 className="text-2xl font-semibold text-futuristic-green-600">
+                  🚨 Q1 2025 Earnings Disappointment
+                </h2>
                 <div className="futuristic-panel p-1">
                   <div className="bg-white/20 rounded-lg overflow-hidden">
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-white/20">
-                          <th className="p-3 text-left text-futuristic-grey-800">Metric</th>
-                          <th className="p-3 text-left text-futuristic-grey-800">Reported</th>
-                          <th className="p-3 text-left text-futuristic-grey-800">Analyst Expectation</th>
-                          <th className="p-3 text-left text-futuristic-grey-800">Surprise</th>
+                          <th className="p-3 text-left text-futuristic-grey-800">
+                            Metric
+                          </th>
+                          <th className="p-3 text-left text-futuristic-grey-800">
+                            Reported
+                          </th>
+                          <th className="p-3 text-left text-futuristic-grey-800">
+                            Analyst Expectation
+                          </th>
+                          <th className="p-3 text-left text-futuristic-grey-800">
+                            Surprise
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr className="border-b border-white/20">
-                          <td className="p-3 text-futuristic-grey-800">Revenue</td>
-                          <td className="p-3 text-futuristic-grey-800">R$24.0 billion</td>
-                          <td className="p-3 text-futuristic-grey-800">~R$26.3 billion</td>
-                          <td className="p-3 text-futuristic-grey-800 text-red-500">-8.8%</td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            Revenue
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            R$24.0 billion
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            ~R$26.3 billion
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800 text-red-500">
+                            -8.8%
+                          </td>
                         </tr>
                         <tr>
-                          <td className="p-3 text-futuristic-grey-800">EPS (Earnings per Share)</td>
-                          <td className="p-3 text-futuristic-grey-800">R$1.19</td>
-                          <td className="p-3 text-futuristic-grey-800">~R$1.45</td>
-                          <td className="p-3 text-futuristic-grey-800 text-red-500">-18%</td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            EPS (Earnings per Share)
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            R$1.19
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            ~R$1.45
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800 text-red-500">
+                            -18%
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -66,12 +89,18 @@ export function BlogPost() {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-futuristic-green-600">📉 Market Reaction</h2>
+                <h2 className="text-2xl font-semibold text-futuristic-green-600">
+                  📉 Market Reaction
+                </h2>
                 <p className="text-futuristic-grey-800">
-                  The broader <strong>Bovespa index</strong> declined only <strong>0.11%</strong> on the same day,
-                  indicating that{" "}
-                  <strong>Banco do Brasil's stock plunge was not part of a broader market downturn</strong>, but rather
-                  a direct reaction to company-specific developments.
+                  The broader <strong>Bovespa index</strong> declined only{" "}
+                  <strong>0.11%</strong> on the same day, indicating that{" "}
+                  <strong>
+                    Banco do Brasil's stock plunge was not part of a broader
+                    market downturn
+                  </strong>
+                  , but rather a direct reaction to company-specific
+                  developments.
                 </p>
               </div>
 
@@ -80,19 +109,23 @@ export function BlogPost() {
                   📉 Analyst Downgrades and Revised Forecasts
                 </h2>
                 <p className="text-futuristic-grey-800">
-                  Following the earnings release, several analysts revised their projections downward:
+                  Following the earnings release, several analysts revised their
+                  projections downward:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-futuristic-grey-800">
                   <li>
-                    <strong>2025 Revenue Forecast:</strong> Adjusted to <strong>R$107.1 billion</strong>
+                    <strong>2025 Revenue Forecast:</strong> Adjusted to{" "}
+                    <strong>R$107.1 billion</strong>
                   </li>
                   <li>
-                    <strong>2025 EPS Forecast:</strong> Lowered to <strong>R$5.92</strong>
+                    <strong>2025 EPS Forecast:</strong> Lowered to{" "}
+                    <strong>R$5.92</strong>
                   </li>
                 </ul>
                 <p className="text-futuristic-grey-800">
-                  These adjustments suggest <strong>diminished earnings potential</strong> for the remainder of the
-                  fiscal year.
+                  These adjustments suggest{" "}
+                  <strong>diminished earnings potential</strong> for the
+                  remainder of the fiscal year.
                 </p>
               </div>
 
@@ -101,35 +134,54 @@ export function BlogPost() {
                   💬 Investor Sentiment and What's Next
                 </h2>
                 <p className="text-futuristic-grey-800">
-                  Despite strong fundamentals and a large customer base, Banco do Brasil faces increased scrutiny over:
+                  Despite strong fundamentals and a large customer base, Banco
+                  do Brasil faces increased scrutiny over:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-futuristic-grey-800">
                   <li>Cost management amid rising inflation pressures</li>
-                  <li>Potential credit risk as interest rates remain elevated</li>
+                  <li>
+                    Potential credit risk as interest rates remain elevated
+                  </li>
                   <li>Competition from fintechs and digital-first banks</li>
                 </ul>
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-futuristic-green-600">📊 Summary</h2>
+                <h2 className="text-2xl font-semibold text-futuristic-green-600">
+                  📊 Summary
+                </h2>
                 <div className="futuristic-panel p-1">
                   <div className="bg-white/20 rounded-lg">
                     <table className="w-full">
                       <tbody>
                         <tr className="border-b border-white/20">
-                          <td className="p-3 font-semibold text-futuristic-grey-800">Event</td>
-                          <td className="p-3 text-futuristic-grey-800">Q1 2025 earnings miss</td>
+                          <td className="p-3 font-semibold text-futuristic-grey-800">
+                            Event
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            Q1 2025 earnings miss
+                          </td>
                         </tr>
                         <tr className="border-b border-white/20">
-                          <td className="p-3 font-semibold text-futuristic-grey-800">Stock Movement</td>
-                          <td className="p-3 text-futuristic-grey-800">-12.69% on May 16</td>
+                          <td className="p-3 font-semibold text-futuristic-grey-800">
+                            Stock Movement
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            -12.69% on May 16
+                          </td>
                         </tr>
                         <tr className="border-b border-white/20">
-                          <td className="p-3 font-semibold text-futuristic-grey-800">Analyst Revisions</td>
-                          <td className="p-3 text-futuristic-grey-800">Lowered revenue and EPS projections</td>
+                          <td className="p-3 font-semibold text-futuristic-grey-800">
+                            Analyst Revisions
+                          </td>
+                          <td className="p-3 text-futuristic-grey-800">
+                            Lowered revenue and EPS projections
+                          </td>
                         </tr>
                         <tr>
-                          <td className="p-3 font-semibold text-futuristic-grey-800">Market Reaction</td>
+                          <td className="p-3 font-semibold text-futuristic-grey-800">
+                            Market Reaction
+                          </td>
                           <td className="p-3 text-futuristic-grey-800">
                             Company-specific decline, not broad market-driven
                           </td>
@@ -141,7 +193,9 @@ export function BlogPost() {
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-futuristic-green-600">📚 Sources & Further Reading</h2>
+                <h2 className="text-2xl font-semibold text-futuristic-green-600">
+                  📚 Sources & Further Reading
+                </h2>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>
                     <a
@@ -182,8 +236,10 @@ export function BlogPost() {
                     🚀 Ready to Invest in Brazil?
                   </h2>
                   <p className="text-futuristic-grey-800 text-center mb-6">
-                    Before making investment decisions in the Brazilian market, discover your investor profile and get
-                    personalized recommendations tailored to your risk tolerance and financial goals.
+                    Before making investment decisions in the Brazilian market,
+                    discover your investor profile and get personalized
+                    recommendations tailored to your risk tolerance and
+                    financial goals.
                   </p>
                   <div className="flex justify-center">
                     <Link
@@ -212,5 +268,5 @@ export function BlogPost() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

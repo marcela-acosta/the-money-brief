@@ -1,23 +1,34 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { RadioGroup } from "@/components/ui/radio-group"
-import { Textarea } from "@/components/ui/textarea"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 
 interface InvestorProfileSurveyProps {
-  onComplete: (answers: Record<string, any>) => void
+  onComplete: (answers: Record<string, any>) => void;
 }
 
-export function InvestorProfileSurvey({ onComplete }: InvestorProfileSurveyProps) {
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, any>>({})
-  const [isTransitioning, setIsTransitioning] = useState(false)
+export function InvestorProfileSurvey({
+  onComplete,
+}: InvestorProfileSurveyProps) {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, any>>({});
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [personalData, setPersonalData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [personalError, setPersonalError] = useState<string | undefined>(
+    undefined
+  );
+  const [personalCompleted, setPersonalCompleted] = useState(false);
 
   const questions = [
     {
@@ -56,7 +67,8 @@ export function InvestorProfileSurvey({ onComplete }: InvestorProfileSurveyProps
     },
     {
       id: "riskTolerance",
-      question: "How would you react if your investment dropped 20% in a short period?",
+      question:
+        "How would you react if your investment dropped 20% in a short period?",
       type: "radio",
       options: [
         { value: "sell", label: "Sell immediately to avoid further losses" },
@@ -105,161 +117,253 @@ export function InvestorProfileSurvey({ onComplete }: InvestorProfileSurveyProps
         value: "yes",
       },
     },
-  ]
+    {
+      id: "emergencyFund",
+      question: "Do you have an emergency fund?",
+      type: "radio",
+      options: [
+        { value: "Yes", label: "Yes" },
+        { value: "No", label: "No" },
+      ],
+      required: true,
+    },
+  ];
 
   // Filter questions based on conditionals
   const filteredQuestions = questions.filter((q) => {
-    if (!q.conditional) return true
+    if (!q.conditional) return true;
 
-    const { questionId, value } = q.conditional
-    return answers[questionId] === value
-  })
+    const { questionId, value } = q.conditional;
+    return answers[questionId] === value;
+  });
 
-  const progress = (currentQuestion / filteredQuestions.length) * 100
+  const progress = (currentQuestion / filteredQuestions.length) * 100;
 
   // Auto-advance to next question after selection (with a slight delay for animation)
   useEffect(() => {
     if (isTransitioning) {
       const timer = setTimeout(() => {
         if (currentQuestion < filteredQuestions.length - 1) {
-          setCurrentQuestion(currentQuestion + 1)
+          setCurrentQuestion(currentQuestion + 1);
         } else {
-          onComplete(answers)
+          onComplete({ ...answers, ...personalData });
         }
-        setIsTransitioning(false)
-      }, 300) // Short delay for visual feedback
+        setIsTransitioning(false);
+      }, 300); // Short delay for visual feedback
 
-      return () => clearTimeout(timer)
+      return () => clearTimeout(timer);
     }
-  }, [isTransitioning, currentQuestion, filteredQuestions.length, answers, onComplete])
+  }, [
+    isTransitioning,
+    currentQuestion,
+    filteredQuestions.length,
+    answers,
+    onComplete,
+    personalData,
+  ]);
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1)
+      setCurrentQuestion(currentQuestion - 1);
     }
-  }
+  };
 
   const handleAnswer = (value: string) => {
-    setAnswers({ ...answers, [filteredQuestions[currentQuestion].id]: value })
+    setAnswers({ ...answers, [filteredQuestions[currentQuestion].id]: value });
 
     // For radio buttons, auto-advance
     if (filteredQuestions[currentQuestion].type === "radio") {
-      setIsTransitioning(true)
+      setIsTransitioning(true);
     }
-  }
+  };
 
-  const handleSubmit = () => {
-    onComplete(answers)
-  }
+  const handlePersonalChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setPersonalData({ ...personalData, [e.target.name]: e.target.value });
+  };
 
-  const currentQuestionData = filteredQuestions[currentQuestion]
-  const isLastQuestion = currentQuestion === filteredQuestions.length - 1
-  const canProceed = answers[currentQuestionData?.id] !== undefined
+  const handlePersonalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPersonalError(undefined);
+    if (
+      !personalData.firstName ||
+      !personalData.lastName ||
+      !personalData.email
+    ) {
+      setPersonalError("Please fill in all fields.");
+      return;
+    }
+    setPersonalCompleted(true);
+  };
+
+  const currentQuestionData = filteredQuestions[currentQuestion];
+  const isLastQuestion = currentQuestion === filteredQuestions.length - 1;
+  const canProceed = answers[currentQuestionData?.id] !== undefined;
 
   return (
     <div className="space-y-6 text-center">
-      <div className="space-y-6 mb-8">
-        <h1 className="text-3xl font-bold text-futuristic-green-700 mt-6">Investor Profile Assessment</h1>
-      </div>
+      {!personalCompleted ? (
+        <form className="max-w-lg mx-auto mb-8" onSubmit={handlePersonalSubmit}>
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            Tell us about yourself
+          </h2>
+          <div className="mb-4">
+            <label className="block mb-1 font-medium">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              value={personalData.firstName}
+              onChange={handlePersonalChange}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 font-medium">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={personalData.lastName}
+              onChange={handlePersonalChange}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={personalData.email}
+              onChange={handlePersonalChange}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          {personalError && (
+            <div className="text-red-600 mb-2">{personalError}</div>
+          )}
+          <button
+            type="submit"
+            className="futuristic-button bg-futuristic-green-600 hover:bg-futuristic-green-700 text-white px-6 py-2 rounded-md"
+          >
+            Continue to Survey
+          </button>
+        </form>
+      ) : (
+        <>
+          <div className="space-y-6 mb-8">
+            <h1 className="text-3xl font-bold text-futuristic-green-700 mt-6">
+              Investor Profile Assessment
+            </h1>
+          </div>
 
-      <div className="futuristic-progress">
-        <div
-          className="futuristic-progress-bar"
-          style={
-            {
-              width: `${progress}%`,
-              "--start-color": "#10B981",
-              "--end-color": "#059669",
-              "--glow-color": "rgba(16, 185, 129, 0.5)",
-            } as React.CSSProperties
-          }
-        ></div>
-      </div>
+          <div className="futuristic-progress">
+            <div
+              className="futuristic-progress-bar"
+              style={
+                {
+                  width: `${progress}%`,
+                  "--start-color": "#10B981",
+                  "--end-color": "#059669",
+                  "--glow-color": "rgba(16, 185, 129, 0.5)",
+                } as React.CSSProperties
+              }
+            ></div>
+          </div>
 
-      <Card className="futuristic-card w-full shadow-lg">
-        <CardContent className="p-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentQuestion}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
-              <h2 className="text-xl font-semibold text-futuristic-grey-800 text-center">
-                {currentQuestionData.question}
-              </h2>
-
-              {currentQuestionData.type === "radio" && (
-                <RadioGroup
-                  value={answers[currentQuestionData.id] || ""}
-                  onValueChange={handleAnswer}
-                  className="space-y-3"
+          <Card className="futuristic-card w-full shadow-lg">
+            <CardContent className="p-8">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentQuestion}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
                 >
-                  {currentQuestionData.options?.map((option) => (
-                    <div
-                      key={option.value}
-                      className={`option-card p-4 rounded-lg hover:bg-white/30 transition-colors cursor-pointer ${
-                        answers[currentQuestionData.id] === option.value ? "selected bg-white/30" : ""
-                      }`}
-                      onClick={() => {
-                        if (answers[currentQuestionData.id] !== option.value) {
-                          handleAnswer(option.value)
-                        }
-                      }}
-                    >
-                      <div className="text-base py-1 text-futuristic-grey-800 text-center">{option.label}</div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              )}
+                  <h2 className="text-xl font-semibold text-futuristic-grey-800 text-center">
+                    {currentQuestionData.question}
+                  </h2>
 
-              {currentQuestionData.type === "textarea" && (
-                <div className="space-y-4">
-                  <div className="futuristic-panel p-1">
-                    <Textarea
-                      placeholder={currentQuestionData.placeholder}
+                  {currentQuestionData.type === "radio" && (
+                    <RadioGroup
                       value={answers[currentQuestionData.id] || ""}
-                      onChange={(e) => handleAnswer(e.target.value)}
-                      className="min-h-[100px] border-0 focus:ring-0 focus:outline-none bg-white/20 resize-none text-futuristic-grey-800 text-center"
-                    />
-                  </div>
+                      onValueChange={handleAnswer}
+                      className="space-y-3"
+                    >
+                      {currentQuestionData.options?.map((option) => (
+                        <div
+                          key={option.value}
+                          className={`option-card p-4 rounded-lg hover:bg-white/30 transition-colors cursor-pointer ${
+                            answers[currentQuestionData.id] === option.value
+                              ? "selected bg-white/30"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            if (
+                              answers[currentQuestionData.id] !== option.value
+                            ) {
+                              handleAnswer(option.value);
+                            }
+                          }}
+                        >
+                          <div className="text-base py-1 text-futuristic-grey-800 text-center">
+                            {option.label}
+                          </div>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  )}
 
-                  {/* Only show submit button for textarea questions or the last question */}
-                  {isLastQuestion && (
-                    <div className="flex justify-center">
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={!canProceed}
-                        className="futuristic-button bg-futuristic-green-600 hover:bg-futuristic-green-700 text-white"
-                      >
-                        Submit
-                      </Button>
+                  {currentQuestionData.type === "textarea" && (
+                    <div className="space-y-4">
+                      <div className="futuristic-panel p-1">
+                        <Textarea
+                          placeholder={currentQuestionData.placeholder}
+                          value={answers[currentQuestionData.id] || ""}
+                          onChange={(e) => handleAnswer(e.target.value)}
+                          className="min-h-[100px] border-0 focus:ring-0 focus:outline-none bg-white/20 resize-none text-futuristic-grey-800 text-center"
+                        />
+                      </div>
+
+                      {/* Only show submit button for textarea questions or the last question */}
+                      {isLastQuestion && (
+                        <div className="flex justify-center">
+                          <Button
+                            onClick={() =>
+                              onComplete({ ...answers, ...personalData })
+                            }
+                            disabled={!canProceed}
+                            className="futuristic-button bg-futuristic-green-600 hover:bg-futuristic-green-700 text-white"
+                          >
+                            Submit
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )}
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="flex justify-between mt-8">
+                <Button
+                  variant="outline"
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  className="futuristic-button bg-white/20 hover:bg-white/30 text-futuristic-grey-800 border-futuristic-grey-300 flex items-center"
+                >
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Previous
+                </Button>
+
+                <div className="text-sm text-futuristic-grey-700 flex items-center bg-white/30 px-3 py-1 rounded-full">
+                  Question {currentQuestion + 1} of {filteredQuestions.length}
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="flex justify-between mt-8">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentQuestion === 0}
-              className="futuristic-button bg-white/20 hover:bg-white/30 text-futuristic-grey-800 border-futuristic-grey-300 flex items-center"
-            >
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              Previous
-            </Button>
-
-            <div className="text-sm text-futuristic-grey-700 flex items-center bg-white/30 px-3 py-1 rounded-full">
-              Question {currentQuestion + 1} of {filteredQuestions.length}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
     </div>
-  )
+  );
 }

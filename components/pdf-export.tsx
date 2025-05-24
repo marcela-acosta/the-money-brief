@@ -12,6 +12,8 @@ interface PdfExportProps {
   recommendations: string[];
   riskScore: number;
   answers: Record<string, any>;
+  saludoCierre: React.ReactNode[];
+  resources: { text: string; link: string; linkText: string }[];
 }
 
 export function PdfExport({
@@ -19,12 +21,17 @@ export function PdfExport({
   recommendations,
   riskScore,
   answers,
+  saludoCierre,
+  resources,
 }: PdfExportProps) {
   return (
     <div
       className="pdf-export-container"
-      style={{ width: "800px", padding: "20px", backgroundColor: "white" }}
+      style={{ padding: "20px", backgroundColor: "white" }}
     >
+      {saludoCierre && saludoCierre.length > 0 && (
+        <div style={{ marginBottom: 24 }}>{saludoCierre}</div>
+      )}
       <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
         Your Investment Profile Results
       </h1>
@@ -64,7 +71,10 @@ export function PdfExport({
 
           <div
             className="p-4 space-y-3 border rounded-lg"
-            style={{ borderColor: "rgba(16, 185, 129, 0.2)" }}
+            style={{
+              borderColor: "rgba(16, 185, 129, 0.2)",
+              backgroundColor: "white",
+            }}
           >
             <h3
               className="text-lg font-semibold text-center"
@@ -112,7 +122,10 @@ export function PdfExport({
             </h3>
             <div
               className="border rounded-lg overflow-hidden"
-              style={{ borderColor: "rgba(16, 185, 129, 0.2)" }}
+              style={{
+                borderColor: "rgba(16, 185, 129, 0.2)",
+                backgroundColor: "white",
+              }}
             >
               <div className="bg-gray-50 rounded-lg">
                 {Object.entries(answers).map(([key, value], index) => {
@@ -126,6 +139,7 @@ export function PdfExport({
                       key={key}
                       className="grid grid-cols-2 gap-2 p-2"
                       style={{
+                        breakInside: "avoid",
                         borderBottom:
                           index !== Object.entries(answers).length - 1
                             ? "1px solid rgba(220, 220, 220, 0.8)"
@@ -150,6 +164,40 @@ export function PdfExport({
           </div>
         </div>
       </div>
+      {resources && resources.length > 0 && (
+        <div style={{ marginTop: 32 }}>
+          <h4
+            style={{
+              color: "#059669",
+              fontWeight: 600,
+              fontSize: "1.125rem",
+              marginBottom: 12,
+              textAlign: "left",
+            }}
+          >
+            Further Investment Resources
+          </h4>
+          <ul style={{ paddingLeft: 24, color: "#374151", fontSize: "1rem" }}>
+            {resources.map((rec, idx) => (
+              <li key={idx} style={{ marginBottom: 12 }}>
+                {rec.text
+                  .trim()
+                  .replace(/^[-–•\s]+/, "")
+                  .replace(/\.$/, "")}
+                {": "}
+                <a
+                  href={rec.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#059669", textDecoration: "none" }}
+                >
+                  {rec.linkText}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="text-center mt-6 text-sm text-gray-500">
         Generated on {new Date().toLocaleDateString()}
       </div>
