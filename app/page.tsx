@@ -112,7 +112,7 @@ export default function Home() {
   // Nueva animación de carga tras el survey
   if (completed && reportLoading) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center">
+      <main className="min-h-screen flex flex-col items-center justify-center bg-white">
         <Head>
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </Head>

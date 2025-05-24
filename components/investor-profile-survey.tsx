@@ -171,8 +171,13 @@ export function InvestorProfileSurvey({
   const handleAnswer = (value: string) => {
     setAnswers({ ...answers, [filteredQuestions[currentQuestion].id]: value });
 
-    // For radio buttons, auto-advance
-    if (filteredQuestions[currentQuestion].type === "radio") {
+    // For radio buttons, auto-advance, EXCEPT for hasInvestments unless the answer is "yes" or "no"
+    if (
+      filteredQuestions[currentQuestion].type === "radio" &&
+      (filteredQuestions[currentQuestion].id !== "hasInvestments" ||
+        value === "yes" ||
+        value === "no")
+    ) {
       setIsTransitioning(true);
     }
   };
@@ -326,17 +331,20 @@ export function InvestorProfileSurvey({
                         />
                       </div>
 
-                      {/* Only show submit button for textarea questions or the last question */}
-                      {isLastQuestion && (
-                        <div className="flex justify-center">
+                      {/* Show Continue button for textarea questions if text is entered */}
+                      {answers[currentQuestionData.id]?.trim() !== "" && (
+                        <div className="flex justify-center mt-4">
                           <Button
-                            onClick={() =>
-                              onComplete({ ...answers, ...personalData })
-                            }
-                            disabled={!canProceed}
+                            onClick={() => {
+                              if (isLastQuestion) {
+                                onComplete({ ...answers, ...personalData });
+                              } else {
+                                setCurrentQuestion(currentQuestion + 1);
+                              }
+                            }}
                             className="futuristic-button bg-futuristic-green-600 hover:bg-futuristic-green-700 text-white"
                           >
-                            Submit
+                            Continue
                           </Button>
                         </div>
                       )}
